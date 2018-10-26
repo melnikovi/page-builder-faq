@@ -5,9 +5,9 @@ define([
     'mage/translate',
     'Magento_PageBuilder/js/events',
     'Magento_PageBuilder/js/content-type/preview',
-    'Magento_PageBuilder/js/content-type/uploader',
+    'Magento_PageBuilder/js/uploader',
     'Magento_PageBuilder/js/config',
-    'Magento_PageBuilder/js/content-type/wysiwyg/factory'
+    'Magento_PageBuilder/js/content-type/factory'
 ], function ($, _, ko, $t, events, PreviewBase, uploader, config, wysiwygFactory) {
     'use strict';
 
@@ -18,13 +18,15 @@ define([
      */
     function Preview(parent, config, stageId) {
         PreviewBase.call(this, parent, config, stageId);
-
     }
 
     Preview.prototype = Object.create(PreviewBase.prototype);
 
     Preview.prototype.uploader = null;
 
+    /**
+     * Bind events for image uploading API
+     */
     Preview.prototype.bindEvents = function bindEvents() {
         var self = this;
 
@@ -54,12 +56,8 @@ define([
         });
     };
 
-    Preview.prototype.isContainer = function () {
-        return false;
-    };
-
     /**
-     * @returns {Boolean}
+     * @returns {boolean}
      */
     Preview.prototype.isWysiwygSupported = function isWysiwygSupported() {
         return config.getConfig("can_use_inline_editing_on_stage");
@@ -128,7 +126,7 @@ define([
     };
 
     /**
-     * Adjust textarea's height based on scrollHeight
+     * Adjust textarea height based on scrollHeight
      */
     Preview.prototype.adjustTextareaHeightBasedOnScrollHeight = function () {
         this.textarea.style.height = "";
@@ -136,11 +134,20 @@ define([
         var minHeight = parseInt($(this.textarea).css("min-height"), 10);
 
         if (scrollHeight === minHeight) {
-            // leave height at 'auto'
+            // Leave height at 'auto'
             return;
         }
 
         $(this.textarea).height(scrollHeight);
+    };
+
+    /**
+     * Check if content type is container
+     *
+     * @returns {boolean}
+     */
+    Preview.prototype.isContainer = function () {
+        return false;
     };
 
     return Preview;

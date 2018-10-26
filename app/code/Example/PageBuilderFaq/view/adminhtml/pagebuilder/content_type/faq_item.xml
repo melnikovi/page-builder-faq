@@ -13,10 +13,7 @@
         <parents default_policy="deny">
             <parent name="faq" policy="allow"/>
         </parents>
-        <children default_policy="allow">
-            <child name="row" policy="deny"/>
-            <child name="faq" policy="deny"/>
-        </children>
+        <children default_policy="deny"/>
         <appearances>
             <appearance name="default"
                         default="true"
@@ -30,12 +27,10 @@
                         <style name="border_color" source="border_color"/>
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
-                        <attribute name="faq_name" source="data-faq-name"/>
                         <css name="css_classes"/>
                     </element>
                     <element name="question">
@@ -44,7 +39,7 @@
                     <element name="answer">
                         <html name="answer"/>
                     </element>
-                    <element name="desktop_image">
+                    <element name="image">
                         <attribute name="image" source="src" converter="Magento_PageBuilder/js/converter/attribute/src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src"/>
                     </element>
                 </elements>

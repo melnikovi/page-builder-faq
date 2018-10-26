@@ -30,12 +30,10 @@
                         <style name="border_color" source="border_color"/>
                         <style name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                        <style name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                         <attribute name="name" source="data-role"/>
                         <attribute name="appearance" source="data-appearance"/>
-                        <attribute name="default_active" source="data-active-tab"/>
                         <css name="css_classes"/>
                     </element>
                 </elements>

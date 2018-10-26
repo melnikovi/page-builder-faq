@@ -4,7 +4,7 @@
     "version": "100.0.0-alpha",
     "require": {
         "magento/framework": "102.0.*",
-        "magento/module-page-builder": "100.3.*",
+        "magento/module-page-builder": "100.0.*",
         "php": "~7.1.3||~7.2.0"
     },
     "type": "magento2-module",

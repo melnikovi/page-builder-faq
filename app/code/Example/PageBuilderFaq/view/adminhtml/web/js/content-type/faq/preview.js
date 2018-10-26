@@ -8,9 +8,8 @@ define([
     'Magento_PageBuilder/js/content-type-factory',
     'Magento_PageBuilder/js/config',
     'Magento_PageBuilder/js/content-type-menu/option',
-    'Magento_PageBuilder/js/content-type/uploader',
     'mage/accordion',
-], function ($, _, ko, $t, events, PreviewCollection, createContentType, pageBuilderConfig, option, uploader) {
+], function ($, _, ko, $t, events, PreviewCollection, createContentType, pageBuilderConfig, option) {
     'use strict';
 
     /**
@@ -19,22 +18,19 @@ define([
      * @param stageId
      */
     function Preview(parent, config, stageId) {
-        var self = this;
-
         PreviewCollection.call(this, parent, config, stageId);
     }
 
     Preview.prototype = Object.create(PreviewCollection.prototype);
 
     /**
-     * Root element for accordion widget
+     * Root element
      */
     Preview.prototype.element = null;
 
-    Preview.prototype.isLiveEditing = ko.observable(false);
-
     Preview.prototype.initializeAccordionWidget = _.debounce(function () {
         if (this.element) {
+            // Remove accordion if it's initialized, try/catch to handle case when accordion is not initialized
             try {
                 $(this.element).accordion('destroy');
             } catch (e) {
@@ -43,6 +39,9 @@ define([
         }
     }, 10);
 
+    /**
+     * Bind events to add empty FAQ item when FAQ added and reinitialize accordion when FAQ item added
+     */
     Preview.prototype.bindEvents = function bindEvents() {
         var self = this;
 
@@ -80,9 +79,9 @@ define([
     };
 
     /**
-     * Return an array of options
+     * Return content menu options
      *
-     * @returns {OptionsInterface}
+     * @returns {object}
      */
     Preview.prototype.retrieveOptions = function () {
         var self = this;
@@ -100,14 +99,21 @@ define([
     };
 
     /**
-     * @returns {boolean}
+     * Set root element
+     *
+     * @returns {void}
      */
     Preview.prototype.afterRender = function (element) {
         this.element = element;
     };
 
+    /**
+     * Check if content type is container
+     *
+     * @returns {boolean}
+     */
     Preview.prototype.isContainer = function () {
-        return false;
+        return true;
     };
 
     return Preview;
