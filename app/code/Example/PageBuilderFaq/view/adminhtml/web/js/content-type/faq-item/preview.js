@@ -7,7 +7,7 @@ define([
     'Magento_PageBuilder/js/content-type/preview',
     'Magento_PageBuilder/js/uploader',
     'Magento_PageBuilder/js/config',
-    'Magento_PageBuilder/js/content-type/factory'
+    'Magento_PageBuilder/js/wysiwyg/factory'
 ], function ($, _, ko, $t, events, PreviewBase, uploader, config, wysiwygFactory) {
     'use strict';
 
