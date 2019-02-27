@@ -6,7 +6,7 @@
           preview_component="Example_PageBuilderFaq/js/content-type/faq/preview"
           master_component="Magento_PageBuilder/js/content-type/master-collection"
           form="pagebuilder_faq_form"
-          group="layout"
+          menu_section="layout"
           icon="icon-pagebuilder-faq"
           sortOrder="20"
           translate="label">
@@ -21,7 +21,7 @@
             <appearance name="default"
                         default="true"
                         preview_template="Example_PageBuilderFaq/content-type/faq/default/preview"
-                        render_template="Example_PageBuilderFaq/content-type/faq/default/master"
+                        master_template="Example_PageBuilderFaq/content-type/faq/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -32,7 +32,7 @@
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
                     </element>

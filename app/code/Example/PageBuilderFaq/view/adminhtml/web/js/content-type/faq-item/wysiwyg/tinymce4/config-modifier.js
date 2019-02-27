@@ -1,8 +1,12 @@
 define([], function () {
     'use strict';
 
-    function ConfigModifier () {}
+    /**
+     * @constructor
+     */
+    function ConfigModifier () {
 
+    }
     ConfigModifier.prototype = Object.create({});
 
     /**

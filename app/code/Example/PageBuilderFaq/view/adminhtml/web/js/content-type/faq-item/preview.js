@@ -15,6 +15,7 @@ define([
      * @param parent
      * @param config
      * @param stageId
+     * @constructor
      */
     function Preview(parent, config, stageId) {
         PreviewBase.call(this, parent, config, stageId);
@@ -32,25 +33,25 @@ define([
 
         PreviewBase.prototype.bindEvents.call(this);
 
-        events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
-            var dataStore = self.parent.dataStore.get();
+        events.on(this.config.name + ":" + this.contentType.id + ":updateAfter", function () {
+            var dataStore = self.contentType.dataStore.getState();
 
             var files = dataStore[self.config.additional_data.uploaderConfig.dataScope];
             var imageObject = files ? files[0] : {};
 
-            events.trigger("image:" + self.parent.id + ":assignAfter", imageObject);
+            events.trigger("image:" + self.contentType.id + ":assignAfter", imageObject);
         });
 
         events.on(this.config.name + ":mountAfter", function () {
-            var dataStore = self.parent.dataStore.get();
+            var dataStore = self.contentType.dataStore.getState();
 
             var initialImageValue = dataStore[self.config.additional_data.uploaderConfig.dataScope] || "";
 
             self.uploader = new uploader(
-                "imageuploader_" + self.parent.id,
+                "imageuploader_" + self.contentType.id,
                 self.config.additional_data.uploaderConfig,
-                self.parent.id,
-                self.parent.dataStore,
+                self.contentType.id,
+                self.contentType.dataStore,
                 initialImageValue
             );
         });
@@ -70,12 +71,13 @@ define([
         var self = this;
 
         this.element = element;
-        element.id = this.parent.id + "-editor";
+        element.id = this.contentType.id + "-editor";
         wysiwygFactory(
-            this.parent.id, element.id,
+            this.contentType.id,
+            element.id,
             this.config.name,
             this.config.additional_data.wysiwygConfig.wysiwygConfigData,
-            this.parent.dataStore, "answer"
+            this.contentType.dataStore, "answer"
         ).then(function (wysiwyg) {
             self.wysiwyg = wysiwyg;
         });
@@ -89,11 +91,11 @@ define([
 
         this.textarea = element;
 
-        this.textarea.value = this.parent.dataStore.get("answer");
+        this.textarea.value = this.contentType.dataStore.get("answer");
         this.adjustTextareaHeightBasedOnScrollHeight();
 
-        events.on("form:" + this.parent.id + ":saveAfter", function () {
-           self.textarea.value = self.parent.dataStore.get("answer");
+        events.on("form:" + this.contentType.id + ":saveAfter", function () {
+           self.textarea.value = self.contentType.dataStore.get("answer");
 
            self.adjustTextareaHeightBasedOnScrollHeight();
         });
@@ -104,7 +106,7 @@ define([
      */
     Preview.prototype.onTextareaKeyUp = function () {
         this.adjustTextareaHeightBasedOnScrollHeight();
-        this.parent.dataStore.update(this.textarea.value, "answer");
+        this.contentType.dataStore.update(this.textarea.value, "answer");
     };
 
     /**
@@ -131,7 +133,7 @@ define([
     Preview.prototype.adjustTextareaHeightBasedOnScrollHeight = function () {
         this.textarea.style.height = "";
         var scrollHeight = this.textarea.scrollHeight;
-        var minHeight = parseInt($(this.textarea).css("min-height"), 10);
+        var minHeight = parseInt($(this.textarea).css("min-height").toString(), 10);
 
         if (scrollHeight === minHeight) {
             // Leave height at 'auto'

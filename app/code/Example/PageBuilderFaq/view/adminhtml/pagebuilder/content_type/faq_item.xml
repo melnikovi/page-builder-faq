@@ -5,11 +5,10 @@
           component="Magento_PageBuilder/js/content-type-collection"
           preview_component="Example_PageBuilderFaq/js/content-type/faq-item/preview"
           form="pagebuilder_faq_item_form"
-          group="layout"
+          menu_section="layout"
           icon="icon-pagebuilder-faq"
           sortOrder="25"
-          translate="label"
-          is_hideable="false">
+          translate="label">
         <parents default_policy="deny">
             <parent name="faq" policy="allow"/>
         </parents>
@@ -18,7 +17,7 @@
             <appearance name="default"
                         default="true"
                         preview_template="Example_PageBuilderFaq/content-type/faq-item/default/preview"
-                        render_template="Example_PageBuilderFaq/content-type/faq-item/default/master"
+                        master_template="Example_PageBuilderFaq/content-type/faq-item/default/master"
                         reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <elements>
                     <element name="main">
@@ -29,7 +28,7 @@
                         <style name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                         <style name="margins" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                         <style name="padding" storage_key="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
-                        <attribute name="name" source="data-role"/>
+                        <attribute name="name" source="data-content-type"/>
                         <attribute name="appearance" source="data-appearance"/>
                         <css name="css_classes"/>
                     </element>
@@ -45,7 +44,7 @@
                 </elements>
             </appearance>
         </appearances>
-        <is_visible>false</is_visible>
+        <is_system>false</is_system>
         <additional_data>
             <item name="uploaderConfig" xsi:type="array">
                 <item name="isShowImageUploadInstructions" xsi:type="boolean">true</item>
