@@ -16,6 +16,7 @@ define([
      * @param parent
      * @param config
      * @param stageId
+     * @constructor
      */
     function Preview(parent, config, stageId) {
         PreviewCollection.call(this, parent, config, stageId);
@@ -48,13 +49,13 @@ define([
         PreviewCollection.prototype.bindEvents.call(this);
 
         events.on("faq:dropAfter", function (args) {
-            if (args.id === self.parent.id && self.parent.children().length === 0) {
+            if (args.id === self.contentType.id && self.contentType.children().length === 0) {
                 self.addFaqItem();
             }
         });
 
         events.on("faq-item:renderAfter", (args) => {
-            if (args.contentType.parent.id === self.parent.id) {
+            if (args.contentType.parentContentType.id === self.contentType.id) {
                 this.initializeAccordionWidget();
             }
         });
@@ -67,14 +68,14 @@ define([
         var self = this;
         createContentType(
             pageBuilderConfig.getContentTypeConfig("faq-item"),
-            this.parent,
-            this.parent.stageId,
+            this.contentType,
+            this.contentType.stageId,
             {
-                question: $t("Question ") + (self.parent.children().length + 1),
+                question: $t("Question ") + (self.contentType.children().length + 1),
                 answer: $t("Edit answer here.")
             }
         ).then(function (container) {
-            self.parent.addChild(container);
+            self.contentType.addChild(container);
         });
     };
 

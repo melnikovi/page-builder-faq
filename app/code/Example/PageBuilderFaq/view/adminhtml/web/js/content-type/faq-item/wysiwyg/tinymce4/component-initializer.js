@@ -1,56 +1,67 @@
 define([
-    "jquery",
-    "mage/adminhtml/wysiwyg/events"
-], function ($, events) {
+    'jquery',
+    'mage/adminhtml/wysiwyg/events'
+], function ($, WysiwygEvents) {
     'use strict';
 
-    function ComponentInitializer () {
-        this.config = null;
-        this.element = null;
+    /**
+     * @constructor
+     */
+    function ComponentInitializer() {
+
     }
 
-    ComponentInitializer.prototype = Object.create({});
-
     /**
-     * Initialize the instance
+     * Initialize the WYSIWYG instance
      *
      * @param wysiwyg
      */
     ComponentInitializer.prototype.initialize = function (wysiwyg) {
-        this.element = (0, $)("#" + wysiwyg.elementId);
-        this.config = wysiwyg.config;
         var tinymce = wysiwyg.getAdapter();
-        tinymce.eventBus.attachEventHandler(events.afterFocus, this.onFocus.bind(this));
-        tinymce.eventBus.attachEventHandler(events.afterBlur, this.onBlur.bind(this));
+
+        this.$element = $("#" + wysiwyg.elementId);
+        this.config = wysiwyg.config;
+
+        tinymce.eventBus.attachEventHandler(WysiwygEvents.afterFocus, this.onFocus.bind(this));
+        tinymce.eventBus.attachEventHandler(WysiwygEvents.afterBlur, this.onBlur.bind(this));
     };
-    
+
     /**
-     * Called when tinymce is focused
+     * Called when TinyMCE is focused
      */
     ComponentInitializer.prototype.onFocus = function () {
         var self = this;
 
         // If there isn't enough room for a left-aligned toolbar, right align it
-        if ((0, $)(window).width() < this.element.offset().left + parseInt(this.config.adapter_config.minToolbarWidth, 10)) {
-            this.element.addClass("_right-aligned-toolbar");
-        } else {
-            this.element.removeClass("_right-aligned-toolbar");
+        if ($(window).width() <
+            this.$element.offset().left + parseInt(this.config.adapter_config.minToolbarWidth, 10)
+        ) {
+            this.$element.addClass("_right-aligned-toolbar");
+        }
+        else {
+            this.$element.removeClass("_right-aligned-toolbar");
         }
 
-        $.each(this.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
-            self.element.closest(selector).css("z-index", 100);
-        });
+        $.each(
+            this.config.adapter_config.parentSelectorsToUnderlay,
+            function (i, selector) {
+                self.$element.closest(selector).css("z-index", 100);
+            }
+        );
     };
 
     /**
-     * Called when tinymce is blurred
+     * Called when TinyMCE is blurred
      */
     ComponentInitializer.prototype.onBlur = function () {
         var self = this;
 
-        $.each(this.config.adapter_config.parentSelectorsToUnderlay, function (i, selector) {
-            self.element.closest(selector).css("z-index", "");
-        });
+        $.each(
+            this.config.adapter_config.parentSelectorsToUnderlay,
+            function (i, selector) {
+                self.$element.closest(selector).css("z-index", "");
+            }
+        );
     };
 
     return ComponentInitializer;
